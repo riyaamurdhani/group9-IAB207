@@ -103,26 +103,70 @@ def registration():
 
     return render_template('registration.html', form=form, generated_username=generated_username)
 
-@index_bp.route('/about-us')
-def about_us():
-    return render_template('about-us.html')
+ @app.route('/about-us') 
+    def about_us(): 
+        return render_template('about-us.html')
 
-@index_bp.route('/contact-us')
-def contact_us():
-    return render_template('contact-us.html')
+    @app.route('/contact-us') 
+    def contact_us(): 
+        return render_template('contact-us.html')
 
-@index_bp.route('/event-details')
-def event_details():
-    form = TicketForm()
-    # Pass current event id here or dynamically fill it in JS before showing modal
-    return render_template('event-details.html', form=form)
+    @app.route('/create-event') 
+    def create_event(): 
+        return render_template('create-event.html')
 
-@index_bp.route('/booking-history')
-def booking_history():
-    # Query all tickets with their user and event info
-    tickets = Ticket.query.join(User).join(Event).all()
-    
-    return render_template('booking-history.html', tickets=tickets)
+    @app.route('/seminar/financial-mindset')
+    def seminar_financial_mindset():
+        return render_template('event-details-financial-mindset.html')
+
+    @app.route('/seminar/learn-how-to-learn')
+    def seminar_learn_how_to_learn():
+        return render_template('event-details-learn-how-to-learn.html')
+
+    @app.route('/seminar/talk-by-the-author')
+    def seminar_talk_by_author():
+        return render_template('event-details-talk-by-the-author.html')
+
+    @app.route('/seminar/ted-talk')
+    def seminar_ted_talk():
+        return render_template('event-details-ted-talk.html')  
+
+    @app.route('/book-ticket', methods=['POST'])
+    def book_ticket():
+        name = request.form.get('name')
+        email = request.form.get('email')
+        flash('Booking successful!', 'success')
+        return redirect(url_for('seminar_financial_mindset'))
+
+    @app.route('/update-event', methods=['POST'])
+    def update_event():
+        return redirect(url_for('seminar_financial_mindset'))
+
+    @app.route('/event-details') 
+    def event_details(): 
+        return render_template('event-details.html')
+
+    @app.route('/booking-history') 
+    def booking_history(): 
+        return render_template('booking-history.html')
+
+    @app.route('/select-event', methods=['POST'])
+    def select_event(): 
+        selected_event = request.form.get('event_type')
+        
+        if selected_event == "Talk by the Author":
+            return redirect(url_for('seminar_talk_by_author'))
+        elif selected_event == "Learn how to learn":
+            return redirect(url_for('seminar_learn_how_to_learn'))
+        elif selected_event == "Ted Talk":
+            return redirect(url_for('seminar_ted_talk'))
+        elif selected_event == "Financial Mindset":
+            return redirect(url_for('seminar_financial_mindset'))
+        else:
+            flash("Please select a valid event type.")
+            return redirect(url_for('home_page'))
+
+
 
 @index_bp.route('/logout')
 def logout():
