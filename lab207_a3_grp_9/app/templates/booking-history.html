@@ -25,13 +25,13 @@
         <ul class="dropdown-menu dropdown-menu-end">
           <li>
             <div class="dropdown-item-text">
-              <div class="fw-bold">Sonam Lhamo</div>
-              <div class="small text-muted">sonamlhamo871@gmail.com</div>
+              <div class="fw-bold">Karma Lhazom</div>
+              <div class="small text-muted">karma.lhazom@connect.qut.edu.au</div>
             </div>
           </li>
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle me-2"></i> Profile Settings</a></li>
-          <li><a class="dropdown-item" href="{{ url_for('index') }}"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('index.index') }}"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
         </ul>
       </div>
     </div>
@@ -44,19 +44,19 @@
         <div class="collapse navbar-collapse" id="navbarMain">
           <ul class="navbar-nav main-menu mx-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('home_page') }}" id="homeNav">Home</a>
+              <a class="nav-link" href="{{ url_for('index.home_page') }}" id="homeNav">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('event_details') }}" id="eventsNav">Seminar Details</a>
+              <a class="nav-link" href="{{ url_for('index.event_details') }}" id="eventsNav">Seminar Details</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('booking_history') }}" id="bookingHistoryNav">Booking History</a>
+              <a class="nav-link" href="{{ url_for('index.booking_history') }}" id="bookingHistoryNav">Booking History</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('about_us') }}" id="aboutUsNav">Get to Know Us</a>
+              <a class="nav-link" href="{{ url_for('index.about_us') }}" id="aboutUsNav">Get to Know Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('contact_us') }}" id="contactUsNav">Contact Us</a>
+              <a class="nav-link" href="{{ url_for('index.contact_us') }}" id="contactUsNav">Contact Us</a>
             </li>
           </ul>
         </div>
@@ -94,46 +94,43 @@
   <div class="container mt-4">
     <div class="row">
       <div class="col-lg-8">
-        <h2>Booking History</h2>
-        <div class="table-responsive">
-          <table class="table align-middle">
-            <thead>
-              <tr>
-                <th scope="col">User Name</th>
-                <th scope="col">User Email</th>
-                <th scope="col">Event Name</th>
-                <th scope="col">Event Date</th>
-                <th scope="col">Event Time</th>
-                <th scope="col">Event Location</th>
-                <th scope="col">Ticket Type</th>
-                <th scope="col">Ticket Quantity</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>John Doe</td>
-                <td>john.doe@example.com</td>
-                <td>Talk by the Author</td>
-                <td>June 15, 2025</td>
-                <td>18:00</td>
-                <td>Central Park</td>
-                <td>General Admission</td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>Jane Doe</td>
-                <td>jane.doe@example.com</td>
-                <td>Ted Talk</td>
-                <td>May 10, 2025</td>
-                <td>11:00</td>
-                <td>Downtown Pavilion</td>
-                <td>VIP Access</td>
-                <td>1</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+  <h2>Booking History</h2>
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th scope="col">User Name</th>
+          <th scope="col">User Email</th>
+          <th scope="col">Event Name</th>
+          <th scope="col">Event Date</th>
+          <th scope="col">Event Time</th>
+          <th scope="col">Event Location</th>
+          <th scope="col">Ticket Type</th>
+          <th scope="col">Ticket Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ticket in tickets %}
+        <tr>
+          <td>{{ ticket.user.username }}</td>
+          <td>{{ ticket.user.email }}</td>
+          <td>{{ ticket.event.name }}</td>
+          <td>{{ ticket.event.date.strftime('%B %d, %Y') }}</td>
+          <td>{{ ticket.event.time.strftime('%H:%M') }}</td>
+          <td>{{ ticket.event.location }}</td>
+          <td>{{ ticket.tickets_type }}</td>
+          <td>{{ ticket.number_of_tickets }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="8" class="text-center">No booking history found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
       <!-- Sidebar - Past Events -->
       <div class="col-lg-4 ps-lg-4">
         <h3 class="sidebar-title">Past Seminars</h3>
