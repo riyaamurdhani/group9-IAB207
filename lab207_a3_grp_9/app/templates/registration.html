@@ -13,7 +13,7 @@
       padding: 30px;
       border-radius: 10px;
       margin: 50px auto;
-      max-width: 500px;
+      max-width: 550px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
     h1 {
@@ -47,16 +47,17 @@
         {{ form.lastname(class="form-control") }}
       </div>
 
-      <div class="mb-3" style="display:none;">
+      <div class="mb-3" style="display: none;">
         {{ form.username.label(class="form-label") }}
         {{ form.username(class="form-control", value=generated_username) }}
       </div>
-      
+
       <div class="mb-3">
         {{ form.email.label(class="form-label") }}
         {{ form.email(class="form-control") }}
       </div>
 
+      <!-- Password is optional if you're generating it in backend -->
       <div class="mb-3">
         {{ form.password.label(class="form-label") }}
         {{ form.password(class="form-control") }}
@@ -72,12 +73,22 @@
         {{ form.address(class="form-control") }}
       </div>
 
-      {% if message %}
-        <div class="alert alert-success">{{ message }}</div>
-      {% endif %}
+      <!-- Success message -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <!-- Field-specific errors -->
       {% if form.errors %}
         <div class="alert alert-danger">
-          <ul>
+          <ul class="mb-0">
             {% for field, errors in form.errors.items() %}
               {% for error in errors %}
                 <li>{{ error }}</li>
@@ -88,10 +99,12 @@
       {% endif %}
 
       <div class="d-flex justify-content-between">
-        <a href="{{ url_for('index') }}" class="btn btn-secondary">Back</a>
+        <a href="{{ url_for('index.index') }}" class="btn btn-secondary">Back</a>
         {{ form.submit(class="btn btn-primary") }}
       </div>
     </form>
+    <!-- Flask Form End -->
+
   </div>
 </div>
 
