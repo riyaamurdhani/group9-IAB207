@@ -63,6 +63,29 @@
       </div>
     </nav>
 
+      </header>
+        <div class="container">
+        <div class="row justify-content-center mt-5 pb-4">
+           <div class="col-md-8">
+              <div class="card shadow p-5 mb-5 bg-light">
+                 <h2 class="text-center mb-3">Select an Event Type:</h2>
+               
+                <form class="form-inline d-flex flex-nowrap" id="eventForm" method="POST" ACTION="{{url_for('select_event')}}">
+                     <select class="form-select-2" name="event_type" required> 
+                       <option selected disabled>Select an event type...</option>
+                       <option value="Talk by the Author" >Talk by the Author</option>
+                       <option value="Learn how to learn">Learn how to learn</option>
+                       <option value="Ted Talk">Ted Talk</option>
+                       <option value="Financial Mindset">Financial Mindset</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                 </form>
+              </div>
+           </div>
+        </div>
+     </div>
+    </div>
+
     <script>
       const navLinks = document.querySelectorAll('.nav-link');
 
