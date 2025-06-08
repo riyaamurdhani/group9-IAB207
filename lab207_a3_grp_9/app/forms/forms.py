@@ -12,3 +12,10 @@ class RegistrationForm(FlaskForm):
     contact_number = StringField('Contact Number', validators=[DataRequired()])
     address = StringField('Street Address', validators=[DataRequired()])
     submit = SubmitField('Register')
+
+class TicketForm(FlaskForm):
+    user_id = StringField('User ID', validators=[DataRequired()])
+    event_id = StringField('Event ID', validators=[DataRequired()])
+    number_of_tickets = StringField('Number of Tickets', validators=[DataRequired()])
+    tickets_type = StringField('Ticket Type', validators=[DataRequired()])
+    submit = SubmitField('Buy Ticket')
